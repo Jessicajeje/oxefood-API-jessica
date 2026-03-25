@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood_api_jessica.modelo.cliente;
+package br.com.ifpe.oxefood_api_jessica.modelo.entregador;
 
 import java.time.LocalDate;
 
@@ -15,17 +15,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Cliente")
+@Table(name = "Entregador")
 @SQLRestriction("habilitado = true")
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente extends EntidadeAuditavel  {
+public class Entregador extends EntidadeAuditavel {
 
-  @Column
+   @Column
    private String nome;
+
+    @Column
+   private String rg;
 
    @Column
    private LocalDate dataNascimento;
@@ -39,4 +42,35 @@ public class Cliente extends EntidadeAuditavel  {
    @Column
    private String foneFixo;
 
+    @Column
+   private Integer qtdEntregasRealizadas;
+
+    @Column
+   private Double valorFrete;
+
+    @Column
+   private String enderecoRua;
+
+    @Column
+   private String enderecoComplemento;
+
+    @Column
+   private String enderecoNumero;
+
+    @Column
+   private String enderecoBairro;
+
+    @Column
+   private String enderecoCidade;
+
+    @Column
+   private String enderecoCep;
+
+    @Column
+   private String enderecoUf;
+
+    @Column
+   private Boolean ativo;
+
+    
 }

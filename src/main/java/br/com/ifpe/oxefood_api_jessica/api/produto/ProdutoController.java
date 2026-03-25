@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood_api_jessica.api.cliente;
+package br.com.ifpe.oxefood_api_jessica.api.produto;
 
 import java.util.List;
 
@@ -15,48 +15,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifpe.oxefood_api_jessica.modelo.cliente.Cliente;
-import br.com.ifpe.oxefood_api_jessica.modelo.cliente.ClienteService;
+import br.com.ifpe.oxefood_api_jessica.modelo.produto.Produto;
+import br.com.ifpe.oxefood_api_jessica.modelo.produto.ProdutoService;
+
 
 @RestController
-@RequestMapping("/api/cliente")
+@RequestMapping("/api/produto")
 @CrossOrigin
-public class ClienteController {
+public class ProdutoController {
     
-    @Autowired
-   private ClienteService clienteService;
+     @Autowired
+   private ProdutoService produtoService;
 
    @PostMapping
-   public ResponseEntity<Cliente> save(@RequestBody ClienteRequest request) {
+   public ResponseEntity<Produto> save(@RequestBody ProdutoRequest request) {
 
-       Cliente cliente = clienteService.save(request.build());
-       return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
-
+       Produto produto = produtoService.save(request.build());
+       return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
    }
 
-   
-    @GetMapping
-    public List<Cliente> listarTodos() {
-        return clienteService.listarTodos();
+       @GetMapping
+    public List<Produto> listarTodos() {
+        return produtoService.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public Cliente obterPorID(@PathVariable Long id) {
-        return clienteService.obterPorID(id);
+    public Produto obterPorID(@PathVariable Long id) {
+        return produtoService.obterPorID(id);
     }
 
-     @PutMapping("/{id}")
- public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody ClienteRequest request) {
+             @PutMapping("/{id}")
+ public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody ProdutoRequest request) {
 
-       clienteService.update(id, request.build());
+       produtoService.update(id, request.build());
        return ResponseEntity.ok().build();
  }
 
-
-   @DeleteMapping("/{id}")
+     @DeleteMapping("/{id}")
    public ResponseEntity<Void> delete(@PathVariable Long id) {
 
-       clienteService.delete(id);
+       produtoService.delete(id);
        return ResponseEntity.ok().build();
    }
 
