@@ -22,6 +22,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoriaProduto extends EntidadeAuditavel{
     
-    @Column
+    @Column(length = 200, nullable = false)
     private String descricao;
 }

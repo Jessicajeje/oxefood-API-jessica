@@ -3,6 +3,7 @@ package br.com.ifpe.oxefood_api_jessica.modelo.entregador;
 import java.time.LocalDate;
 
 import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.ifpe.oxefood_api_jessica.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
@@ -24,46 +25,47 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Entregador extends EntidadeAuditavel {
 
-   @Column
+   @Column(nullable = false, length = 100)
    private String nome;
 
-    @Column
+    @Column(nullable = false, length = 20, unique = true)
    private String rg;
 
    @Column
    private LocalDate dataNascimento;
 
-   @Column
+   @Column(unique = true, nullable = false)
+   @CPF(message = "O CPF deve ser válido")
    private String cpf;
 
-   @Column
+   @Column(nullable = false)
    private String foneCelular;
 
-   @Column
+   @Column(nullable = false)
    private String foneFixo;
 
-    @Column
+    @Column(nullable = false, length = 30)
    private Integer qtdEntregasRealizadas;
 
-    @Column
+    @Column(nullable = false)
    private Double valorFrete;
 
-    @Column
+    @Column(length = 100)
    private String enderecoRua;
 
-    @Column
+    @Column(length = 200)
    private String enderecoComplemento;
 
-    @Column
+    @Column(length = 100)
    private String enderecoNumero;
 
-    @Column
+    @Column(length = 100)
    private String enderecoBairro;
 
-    @Column
+    @Column(length = 100)
    private String enderecoCidade;
 
-    @Column
+    @Column(length = 8)
    private String enderecoCep;
 
     @Column

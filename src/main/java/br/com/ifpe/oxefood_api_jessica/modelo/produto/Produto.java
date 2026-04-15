@@ -26,18 +26,19 @@ public class Produto extends EntidadeAuditavel {
     
    @ManyToOne
    @JoinColumn(name = "categoria_id")
+   @Column(nullable = false, length = 100)
    private CategoriaProduto categoria;
 
    @Column
    private String codigo;
 
-   @Column
+   @Column(nullable = false, length = 100)
    private String titulo;
 
-   @Column
+   @Column(length = 200, nullable = false)
    private String descricao;
 
-   @Column
+   @Column(length = 100, nullable = false)
    private Double valorUnitario;
 
    @Column
