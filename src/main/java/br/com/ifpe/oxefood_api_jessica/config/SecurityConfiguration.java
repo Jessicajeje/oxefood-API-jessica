@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import br.com.ifpe.oxefood_api_jessica.modelo.acesso.Perfil;
 import br.com.ifpe.oxefood_api_jessica.modelo.seguranca.JwtAuthenticationFilter;
 
 @Configuration
@@ -41,8 +40,26 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(authorize -> authorize
 //rotas a  colocar para a filtragem:
                 .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll()//permitAll: liberada para qualquer pessoa acessar(cadASTRO DO CLIENTE)
+                .requestMatchers(HttpMethod.POST, "/api/funcionario").permitAll()
                 //URL PARA ACESSAR O CONTROLLER 
                 .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
+
+                //acesso a depender do perfil do usuário
+                .requestMatchers(HttpMethod.GET, "/api/produto/").hasAnyAuthority(
+                   Perfil.ROLE_CLIENTE,
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_FUNCIONARIO_USER) //Consulta de produto
+
+               .requestMatchers(HttpMethod.POST, "/api/produto").hasAnyAuthority(
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_FUNCIONARIO_USER) //Cadastro de produto
+
+               .requestMatchers(HttpMethod.PUT, "/api/produto/*").hasAnyAuthority(
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_FUNCIONARIO_USER) //Alteração de produto
+                  
+               .requestMatchers(HttpMethod.DELETE, "/api/produto/*").hasAnyAuthority(
+                   Perfil.ROLE_FUNCIONARIO_ADMIN) //Exclusão de produto
 
                 .requestMatchers(HttpMethod.GET, "/api-docs/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/swagger-ui/*").permitAll()
