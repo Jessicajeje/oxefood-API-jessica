@@ -10,10 +10,14 @@ import br.com.ifpe.oxefood_api_jessica.modelo.acesso.Perfil;
 import br.com.ifpe.oxefood_api_jessica.modelo.acesso.PerfilRepository;
 import br.com.ifpe.oxefood_api_jessica.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood_api_jessica.modelo.acesso.UsuarioService;
+import br.com.ifpe.oxefood_api_jessica.modelo.mensagens.EmailService;
 import jakarta.transaction.Transactional;
 
 @Service
 public class ClienteService {
+
+      @Autowired
+    private EmailService emailService;
 
    @Autowired
    private ClienteRepository repository;
@@ -42,8 +46,9 @@ public class ClienteService {
 
        cliente.setHabilitado(Boolean.TRUE);
        cliente.setCriadoPor(usuarioLogado);
-
-       return repository.save(cliente);
+        Cliente clienteSalvo = repository.save(cliente);
+      emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);
+       return clienteSalvo;
    }
 
        public List<Cliente> listarTodos() {
